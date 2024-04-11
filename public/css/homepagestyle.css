@@ -1,0 +1,67 @@
+
+/* Style the top navigation bar */
+.navbar-top {
+  overflow: hidden;
+  background-color: #48525C; /* Blue background color */
+}
+
+/* Style the links inside the navigation bar */
+.navbar-top a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change color on hover */
+.navbar-top a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add an active class to the current link */
+.navbar-top a.active {
+  background-color: #48525C; /* Darker blue color when link is active */
+}
+
+/* Add an underline style to active link */
+.navbar-top a.active:after {
+  content: '';
+  display: block;
+  width: 50%;
+  margin: auto;
+  padding-top: 2px;
+  border-bottom: 2px solid white;
+}
+
+.card-title, .text-balance{
+  text-wrap: balance;
+}
+
+.container-fluid.fill {
+  height: 100vh;
+}
+
+footer.fill {
+  position: absolute;
+  bottom: 0;
+}
+
+footer .col-xl-6 {
+  text-wrap: nowrap;
+}
+
+.flex-group {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 25px;
+  row-gap: 25px;
+
+  /* Small Screens */
+  @media screen and (max-width: 576px){
+    grid-template-columns: auto auto;
+  }
+}
