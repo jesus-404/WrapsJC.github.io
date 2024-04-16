@@ -1,3 +1,3 @@
 module.exports = {
-    uri: 'mongodb+srv://jaguayo8:a!hdcM7Wy.6XRMr@shoppingsite.cwlfbe1.mongodb.net/?retryWrites=true&w=majority'
+    uri: 'mongodb+srv://jrenati:IdiHYem3S9JUTMQ0@wrapsjc.jnrloel.mongodb.net/?retryWrites=true&w=majority&appName=WrapsJC'
 };
