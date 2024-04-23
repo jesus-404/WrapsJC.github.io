@@ -46,42 +46,95 @@ module.exports.viewCustomers = async (req, res) => {
  * This is the main function save to your definde MongoClient defined at the top
  * which connects to your database here defined as "shoppingsite" and in it will access
  * the collection "customers" to create a new Customer with the name and email
- * NOTE: no check if the user already exists (with this email) is done BUT, SHOULD BE DONE
- * @param name
+ * @param req
+ * @param res
  * @param email
- * @returns {Promise<void>}
+ * @param pass
+ * @param street
+ * @param city
+ * @param state
+ * @param zip
+ * @param phone
+ * @return Promise<void>
  */
-async function saveCustomerToMongoDB(name, email) {
+module.exports.saveCustomerToMongoDB = async function(req, res, email, pass, street, city, state, zip, phone) {
     try {
-
-        //STEP A: Connect the client to the server	(optional starting in v4.7)
+        // Connect the client
         await client.connect();
-        //STEP B:  Send a ping to confirm a successful connection
+        // Connect to the admin database and send a ping
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
-
-        //STEP C: connect to the database "shoppingsite"
-        var db0 = client.db("shoppingsite"); //client.db("shoppingsite");
+        // Connect to the database
+        var db0 = client.db("WrapsJC");
         console.log("got shopping site");
         console.log("db0" + db0.toString());
 
-        //STEP D: grab the customers collection
+        // Grab the customers collection
         var customersCollection =  db0.collection('customers');
         console.log("collection is "+ customersCollection.collectionName);
         console.log(" # documents in it " + await customersCollection.countDocuments());
 
-        //STEP E: insert the new customer and display in console the new # documents in customers
-        console.log("Insert new customer");
-        await customersCollection.insertOne({"name": name, "email": email });
-        console.log("  # documnents now = " + await customersCollection.countDocuments());
+        // Check if the email already exists in the collection
+        const existingCustomer = await customersCollection.findOne({ email });
+        if (existingCustomer) {
+            console.log('Email already exists.');
+            res.status(400).send('email already exists.');
+        }
 
+        // Insert the new customer
+        await customersCollection.insertOne({
+            "email": email,
+            "password": pass,
+            "street": street,
+            "city": city,
+            "state": state,
+            "zip": zip,
+            "phone": phone
+        });
+        console.log(" # documents now = " + await customersCollection.countDocuments());
+        res.status(200);
+    } catch (error) {
+        console.error('Error saving user:', error);
+        res.status(500).json({ message: error.message })
     } finally {
-    // STEP F: Ensures that the client will close when you finish/error
+    // Close client
     await client.close();
     }
 }
 
+/**
+ * Checks if credentials match customer in database
+ * @param req
+ * @param res
+ * @param email
+ * @param pass
+ */
+module.exports.customerLogin = async function(req, res, email, pass) {
+    await client.connect();
+    // Connect to the admin database and send a ping
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+    // Connect to the database
+    var db0 = client.db("WrapsJC");
+    console.log("got shopping site");
+    console.log("db0" + db0.toString());
+
+    // Grab the customers collection
+    var customersCollection =  db0.collection('customers');
+    console.log("collection is "+ customersCollection.collectionName);
+    console.log(" # documents in it " + await customersCollection.countDocuments());
+
+    const matchingCustomer = await customersCollection.findOne({ email });
+
+    if (matchingCustomer) {
+        if (matchingCustomer.password === pass) {
+            return res.status(200);
+        }
+    }
+    res.status(401).send('wrong email and/or password');
+}
 async function GetCustomersFromMongoDB() {
     try {
 

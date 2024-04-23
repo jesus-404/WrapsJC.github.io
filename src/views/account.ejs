@@ -41,14 +41,14 @@
         <h1 class="text-center"><br>Account</h1>
         <div class="text-center">
           <h2>Login</h2>
-          <form id="loginForm" onsubmit="//Do Something">
+          <form id="loginForm">
             <div class="form-group">
               <label for="loginEmail">Email:</label>
-              <input type="email" class="form-control" id="loginEmail" name="loginEmail" required>
+              <input type="email" class="form-control" id="loginEmail" placeholder="Enter email" required>
             </div>
             <div class="form-group">
               <label for="loginPassword">Password:</label>
-              <input type="password" class="form-control" id="loginPassword" name="loginPassword" required>
+              <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
           </form>
@@ -69,7 +69,41 @@
     </footer>
   </div>
 </div>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
 
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    const formData = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await fetch("/account", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        console.log("login successful");
+        alert("login successful");
+        window.location = '/';
+      } else {
+        const errorMessage = await response.text();
+        console.error("Error logging in: ", errorMessage);
+        alert(errorMessage);
+      }
+    } catch (error) {
+      console.error("Error logging in: ", error);
+    }
+  });
+</script>
 <!-- Bootstrap Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

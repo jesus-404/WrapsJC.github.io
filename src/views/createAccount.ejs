@@ -41,7 +41,7 @@
         <h1 class="text-center">&nbsp;</h1>
         <div class="text-center">
           <h2>Create Account</h2>
-          <form id="createAccountForm" onsubmit="//USE BOOTSRAP VALIDATION">
+          <form id="createAccountForm">
             <div class="form-group">
               <label for="email">Email address</label>
               <input type="email" class="form-control" id="email" placeholder="Enter email" required>
@@ -88,6 +88,67 @@
     </footer>
   </div>
 </div>
+
+<script>
+  document.getElementById("createAccountForm").addEventListener("submit", async function (event) {
+    event.preventDefault(); // Prevent the default form submission behavior (page reload)
+
+    // Extract form data
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const street = document.getElementById("street").value;
+    const city = document.getElementById("city").value;
+    const state = document.getElementById("state").value;
+    const zip = document.getElementById("zip").value;
+    const phone = document.getElementById("phone").value;
+
+    const formData = {
+      email,
+      password,
+      street,
+      city,
+      state,
+      zip,
+      phone
+    };
+
+    if (!password || !email) {
+      alert("Please fill out all required fields.");
+      return;
+    }
+
+    // All or none for optional fields
+    if (street || city || state || zip) {
+      if (!(street && city && state && zip)) {
+        alert("Please fill out all address fields.")
+        return;
+      }
+    }
+
+    // Send a POST request
+    try {
+      const response = await fetch("/createAccount", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        console.log("Account created successfully!");
+        alert("Account created successfully. Please log in.");
+        window.location = '/account';
+      } else {
+        const errorMessage = await response.text();
+        console.error("Error creating account: ", errorMessage);
+        alert("Error creating account: " + errorMessage);
+      }
+    } catch (error) {
+      console.error("Error creating account:", error);
+    }
+  });
+</script>
 
 <!-- Bootstrap Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
