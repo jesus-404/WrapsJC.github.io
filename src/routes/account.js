@@ -10,13 +10,12 @@ router.post("/", async(req, res) => {
   try {
     // Extract data from the form
     console.log("Form data received:", req.body);
-    const { email, password } = req.body;
 
-    await customerLogin(req, res, email, password);
+    await customerLogin(req, res);
 
   } catch (error) {
-    console.error("Error logging in:", error);
-    res.status(500).send(error);
+    console.error("Error logging in: ", error);
+    res.status(500).send("Error logging in: " + error);
   }
 });
 

@@ -41,14 +41,14 @@
         <h1 class="text-center"><br>Account</h1>
         <div class="text-center">
           <h2>Login</h2>
-          <form id="loginForm">
+          <form id="loginForm" method="POST" action="/account">
             <div class="form-group">
               <label for="loginEmail">Email:</label>
-              <input type="email" class="form-control" id="loginEmail" placeholder="Enter email" required>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
             </div>
             <div class="form-group">
               <label for="loginPassword">Password:</label>
-              <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
           </form>
@@ -71,37 +71,8 @@
 </div>
 <script>
   document.getElementById("loginForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
-
     const email = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
-
-    const formData = {
-      email,
-      password,
-    };
-
-    try {
-      const response = await fetch("/account", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (response.ok) {
-        console.log("login successful");
-        alert("login successful");
-        window.location = '/';
-      } else {
-        const errorMessage = await response.text();
-        console.error("Error logging in: ", errorMessage);
-        alert(errorMessage);
-      }
-    } catch (error) {
-      console.error("Error logging in: ", error);
-    }
   });
 </script>
 <!-- Bootstrap Scripts -->
