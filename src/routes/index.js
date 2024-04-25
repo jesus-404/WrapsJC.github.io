@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { addToCart } = require("../controllers/database");
 
 // To process data sent in on request
 const bodyParser = require('body-parser');
@@ -13,6 +14,10 @@ router.use(bodyParser.urlencoded({ extended: true })); // for parsing applicatio
 // GET home page
 router.get('/', function(req, res, next) {
   res.render('index');
+});
+
+router.get('/addToCart/:id', async function (req, res, next) {
+  await addToCart(req, res, next);
 });
 
 // Database
