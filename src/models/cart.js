@@ -13,6 +13,13 @@ module.exports = function Cart(prevCart) {
         this.totalPrice += storedItem.item.price;
     };
 
+    this.reduceByOne = function(id) {
+        this.items[id].quantity--;
+        this.items[id].price -= this.items[id].item.price;
+        this.totalQuantity--;
+        this.totalPrice -= this.items[id].item.price;
+    };
+
     this.toArray = function() {
         let arr = [];
         for (let id in this.items) {
