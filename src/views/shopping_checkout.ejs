@@ -26,18 +26,18 @@
 
 <div class="container">
   <h4 class="mb-3">Billing Address</h4>
-  <form novalidate>
+  <form novalidate >
     <div class="row g-3">
       <div class="col-sm-6">
         <label for="firstName" class="form-label">First Name</label>
-        <input id="firstName" type="text" class="form-control" placeholder="Jose" required>
+        <input id="firstName" type="text" class="form-control" placeholder="Name" required>
         <div class="invalid-feedback">
           Valid First name is required.
         </div>
       </div>
         <div class="col-sm-6">
           <label for="lastName" class="form-label">Last Name</label>
-          <input id="lastName" type="text" class="form-control" placeholder="Hernandez" required>
+          <input id="lastName" type="text" class="form-control" placeholder="Last Name" required>
           <div class="invalid-feedback">
             Valid Last name is required.
           </div>
@@ -47,7 +47,7 @@
         <div class="input-group">
           <span
                   class="input-group-text">@</span>
-                  <input id="username" type="text" class="form-control" placeholder="jhern" required>
+                  <input id="username" type="text" class="form-control" placeholder="XXXX" required>
         </div>
         <div class="invalid-feedback">
         Valid Username is required.
@@ -126,21 +126,21 @@
 
       <h4 class="mb-3">Shipping</h4>
 
-      <div class="form-check">
-        <input id="shipping" name="paymentMethod" type="radio"
+      <div class="form-check1">
+        <input id="shipping" name="shipping" type="radio"
                class="form-check-input" checked required>
         <label for="normalship">3-5 business days - $0.00&nbsp;</label>
       </div>
 
 
-      <div class="form-check">
-        <input id="sshipping" name="paymentMethod" type="radio"
+      <div class="form-check1">
+        <input id="sshipping" name="shipping" type="radio"
                class="form-check-input" checked required>
         <label for="fsshipping">2 business days - $7.00&nbsp;</label>
       </div>
 
-      <div class="form-check">
-        <input id="fast" name="paymentMethod" type="radio"
+      <div class="form-check1">
+        <input id="fast" name="shipping" type="radio"
                class="form-check-input" checked required>
         <label for="fast">1 business day - $22.00&nbsp;</label>
       </div>
