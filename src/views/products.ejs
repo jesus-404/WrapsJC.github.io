@@ -56,19 +56,18 @@
         </a>
       </div>
       <!-- Template Start -->
-      <!--====== NEED TO USE MongoDB, EJS, QuerySearch to fill in the data ======-->
       <h1 class="text-center"><br>Our Products</h1>
       <p class="text-center"><br><br>
       </p>
       <div class="flex-group">
-      <% for (let prodID=1; prodID<=25; prodID++) {%>
-        <div class="card"> <img class="card-img-top" src="img/prod<%= prodID %>.jpg" alt="Card image cap">
+        <% products.forEach(product => { %>
+        <div class="card"> <img class="card-img-top" src=<%= product.imageURL %> alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title"><%= name %></h5>
-            <p class="card-text">$<%= price %> USD</p>
-            <a href="/item?prod=<%= prodID %>" class="btn btn-primary">View</a></div>
+            <h5 class="card-title"><%= product.name %></h5>
+            <p class="card-text"><%= product.price %> USD</p>
+            <a href="/item?prod=<%= product._id %>" class="btn btn-primary">View</a></div>
         </div>
-      <% } %>
+        <% }); %>
       </div>
       <!-- Template End -->
       <br>
