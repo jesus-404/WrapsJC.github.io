@@ -4,7 +4,7 @@ const Cart = require('../models/cart')
 
 router.get('/', function(req, res, next) {
   if (!req.session.cart) {
-    return res.render('shopping_cart', { products: null });
+    return res.render('shopping_cart', { products: null, totalPrice: 0 });
   }
   const cart = new Cart(req.session.cart);
   res.render('shopping_cart', { products: cart.toArray(), totalPrice: cart.totalPrice });
