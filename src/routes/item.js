@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const { getProduct } = require("../controllers/database");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  let name = 'High Glossy Paint Black Vinyl Wrap';
-  let price = '40.00';
-  let prodID = req.query.prod;
-  res.render('item', { name: name, price: price, prodID: prodID });
+router.get('/', async function (req, res, next) {
+  const product = await getProduct(req, res, next);
+  res.render('item', {product});
 });
 
 module.exports = router;
