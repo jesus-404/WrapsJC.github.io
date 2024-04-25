@@ -41,6 +41,11 @@
         <h1 class="text-center">&nbsp;</h1>
         <div class="text-center">
           <h2>Create Account</h2>
+          <% if (emailInUse) { %>
+            <div class="alert alert-danger">
+              Email already in use. Please <a href="/account">Sign In</a>
+            </div>
+          <% } %>
           <form id="createAccountForm" method="POST" action="/createAccount">
             <div class="form-group">
               <label for="email">Email address</label>
@@ -91,8 +96,6 @@
 
 <script>
   document.getElementById("createAccountForm").addEventListener("submit", async function (event) {
-    //event.preventDefault(); // Prevent the default form submission behavior (page reload)
-
     // Extract form data
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;

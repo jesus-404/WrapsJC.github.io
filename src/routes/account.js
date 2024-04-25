@@ -4,7 +4,11 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('account');
+  const loginPrompt = req.query.loginPrompt;
+  const loginFailed = req.query.loginFailed;
+  const loginSuccess = req.query.loginSuccess;
+  const loginEmail = req.query.loginEmail;
+  res.render('account', { loginPrompt, loginFailed, loginSuccess, loginEmail});
 });
 router.post("/", async(req, res) => {
   try {

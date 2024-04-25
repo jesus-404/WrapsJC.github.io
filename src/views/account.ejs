@@ -41,6 +41,21 @@
         <h1 class="text-center"><br>Account</h1>
         <div class="text-center">
           <h2>Login</h2>
+          <% if (loginPrompt) { %>
+            <div class="alert alert-success" role="alert">
+              <%= loginPrompt %>
+            </div>
+          <% } %>
+          <% if (loginFailed) { %>
+            <div class="alert alert-danger">
+              Login failed. Please check your credentials.
+            </div>
+          <% } %>
+          <% if (loginSuccess) { %>
+            <div class="alert alert-success">
+              Welcome <%= loginEmail %>, returning to <a href="/"> homepage...</a>
+            </div>
+          <% } %>
           <form id="loginForm" method="POST" action="/account">
             <div class="form-group">
               <label for="loginEmail">Email:</label>
@@ -70,6 +85,11 @@
   </div>
 </div>
 <script>
+  <% if (loginSuccess) { %>
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 3000);
+  <% } %>
   document.getElementById("loginForm").addEventListener("submit", async function (event) {
     const email = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;

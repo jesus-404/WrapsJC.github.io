@@ -4,13 +4,12 @@ const { saveCustomerToMongoDB, saveNewCustomer} = require('../controllers/databa
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('createAccount');
+  const emailInUse = req.query.emailInUse;
+  res.render('createAccount', { emailInUse });
 });
 router.post("/", async(req, res) => {
   try {
-    // Extract data from the form
     console.log("Form data received:");
-    //const { email, password, street, city, state, zip, phone } = req.body;
 
     await saveNewCustomer(req, res);
 

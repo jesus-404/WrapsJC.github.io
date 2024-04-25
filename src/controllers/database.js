@@ -33,8 +33,7 @@ module.exports.saveNewCustomer =  async function(req, res, next) {
         // Check if the email already exists in the collection
         const existingCustomer = await customersCollection.findOne({ email });
         if (existingCustomer) {
-            console.log('Email already exists');
-            res.status(400).send('email already exists');
+            res.redirect(`/createAccount?emailInUse=true`);
             return;
         }
 
@@ -51,7 +50,8 @@ module.exports.saveNewCustomer =  async function(req, res, next) {
         console.log(" # documents now = " + await customersCollection.countDocuments());
         console.log("NEW Customer Data  " + email);
 
-        res.status(200).send("Welcome, " + email + "<br/> Please <a href='/account'>Sign In</a>");
+        const loginPrompt = 'Account created successfully! Please sign in.';
+        res.redirect(`/account?loginPrompt=${encodeURIComponent(loginPrompt)}`);
 
     } catch (error) {
         console.error('Error saving user: ', error);
@@ -97,10 +97,11 @@ module.exports.customerLogin = async function(req, res) {
 
         if (matchingCustomer) {
             if (matchingCustomer.password === password) {
-                return res.status(200).send("Login successful");
+                res.redirect(`/account?loginSuccess=true&loginEmail=${encodeURIComponent(email)}`);
+                return;
             }
         }
-        res.status(401).send('wrong email and/or password');
+        res.redirect(`/account?loginFailed=true`);
     } catch (error) {
         console.error('Error authenticating user: ', error);
         res.status(500).send('Error authenticating user: ' + error)
