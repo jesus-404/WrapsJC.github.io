@@ -59,12 +59,12 @@
     <!--====== NEED TO USE MongoDB, EJS, QuerySearch to fill in the data ======-->
     <p class="text-center"><br><br></p>
     <div class="row">
-      <div class="col-xl-4"><img src="img/prod<%= prodID %>.jpg" class="img-fluid" alt=""></div>
+      <div class="col-xl-4"><img src=<%= product.imageURL %> class="img-fluid" alt=""></div>
       <div class="col-xl-4"></div>
       <div class="col-xl-4">
-        <h2><%= name %></h2>
-        <h4>$<%= price %> USD</h4><br>
-        <a class="btn btn-primary btn-sm" href="/addToCart/<%= prodID %>">Add to cart</a>
+        <h2><%= product.name %></h2>
+        <h4><%= product.price %> USD</h4><br>
+        <a class="btn btn-primary btn-sm" href="/addToCart/<%= product._id %>">Add to cart</a>
       </div>
     </div>
     <div class="row">
