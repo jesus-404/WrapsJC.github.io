@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 // To process data sent in on request
-var bodyParser = require('body-parser');
-var path = require('path'); //to work with separtors on any OS including Windows
-var querystring = require('querystring'); //for use in GET Query string of form URI/path?name=value
+const bodyParser = require('body-parser');
+const path = require('path'); //to work with separtors on any OS including Windows
+const querystring = require('querystring'); //for use in GET Query string of form URI/path?name=value
 
 router.use(bodyParser.json()); // for parsing application/json
 router.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 // Database
-var controllerDatabase = require('../controllers/database');   //this will load the controller file below
-router.post("/saveNewCustomer", controllerDatabase.saveNewCustomer); //see controllers/database.js file
+const controllerDatabase = require('../controllers/database');   //this will load the controller file below
+router.post("/saveNewUser", controllerDatabase.saveNewUser); //see controllers/database.js file
 
 module.exports = router;

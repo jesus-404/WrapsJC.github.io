@@ -1,20 +1,20 @@
 // Imports
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
 // Routes
-var indexRouter = require('./routes/index');
-var aboutRouter = require('./routes/about');
-var productsRouter = require('./routes/products');
-var contactsRouter = require('./routes/contacts');
-var accountRouter = require('./routes/account');
-var createAccountRouter = require('./routes/createAccount');
-var itemRouter = require('./routes/item');
+const indexRouter = require('./routes/index');
+const aboutRouter = require('./routes/about');
+const productsRouter = require('./routes/products');
+const contactsRouter = require('./routes/contacts');
+const accountRouter = require('./routes/account');
+const createAccountRouter = require('./routes/createAccount');
+const itemRouter = require('./routes/item');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

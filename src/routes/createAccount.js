@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-const { saveCustomerToMongoDB, saveNewCustomer} = require('../controllers/database');
+const express = require('express');
+const router = express.Router();
+const { saveNewUser} = require('../controllers/database');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -11,7 +11,7 @@ router.post("/", async(req, res) => {
   try {
     console.log("Form data received:");
 
-    await saveNewCustomer(req, res);
+    await saveNewUser(req, res);
 
   } catch (error) {
     console.error("Error saving user:", error);

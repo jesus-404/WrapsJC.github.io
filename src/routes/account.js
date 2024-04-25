@@ -1,6 +1,6 @@
-var express = require('express');
-const { customerLogin } = require("../controllers/database");
-var router = express.Router();
+const express = require('express');
+const { userLogin } = require("../controllers/database");
+const router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -15,7 +15,7 @@ router.post("/", async(req, res) => {
     // Extract data from the form
     console.log("Form data received:", req.body);
 
-    await customerLogin(req, res);
+    await userLogin(req, res);
 
   } catch (error) {
     console.error("Error logging in: ", error);
