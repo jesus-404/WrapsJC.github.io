@@ -3,9 +3,9 @@ const { uri } = require('./controllers/databaseConnection');
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const session = require('express-session');
 const mongoStore = require('connect-mongo');
 
 const app = express();
@@ -42,6 +42,8 @@ const contactsRouter = require('./routes/contacts');
 const accountRouter = require('./routes/account');
 const createAccountRouter = require('./routes/createAccount');
 const itemRouter = require('./routes/item');
+const shoppingCartRouter = require('./routes/shopping_cart');
+const shoppingCartCheckoutRouter = require('./routes/shoppingcartcheckout');
 
 // Paths
 app.use('/', indexRouter);
@@ -51,6 +53,8 @@ app.use('/contacts', contactsRouter);
 app.use('/account', accountRouter);
 app.use('/createAccount', createAccountRouter);
 app.use('/item', itemRouter);
+app.use('/shopping_cart', shoppingCartRouter);
+app.use('/shoppingcartcheckout', shoppingCartCheckoutRouter);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
