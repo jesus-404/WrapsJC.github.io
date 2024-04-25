@@ -18,23 +18,7 @@
 <body>
 <div class="container-fluid">
   <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="/">&#8194<img src="/img/m2i8A0H7K9N4b1A0.png" height="50" alt="logo"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
-          <li class="nav-item"><a class="nav-link" href="/contacts">Contact</a></li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/account">Create Account/Sign in</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <%- include('layouts/navBar.ejs') %>
     <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel" style="background-color: grey">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
