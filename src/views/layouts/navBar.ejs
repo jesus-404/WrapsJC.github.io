@@ -1,6 +1,6 @@
 <!-- NavBar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex">
-    <a class="navbar-brand" href="/">&#8194<img src="/img/m2i8A0H7K9N4b1A0.png" height="50" alt="logo"></a>
+    <a class="navbar-brand" href="/"> <img src="/img/m2i8A0H7K9N4b1A0.png" height="50" alt="logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent1">
         <ul class="navbar-nav mr-auto">
@@ -16,8 +16,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="/checkout">out</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/cart">&#8194<img src="/img/shop_12411190.png" height="25" alt="shopping"></a>
+            <li class="nav-item position-relative">
+                <a class="nav-link shopping-cart" href="/shopping_cart"> <img src="/img/shop_12411190.png" height="25" alt="cart"></a>
+                <% if (session.cart) { %>
+                    <a class="badge badge-success" href="/shopping_cart"><%= session.cart.totalQuantity %></a>
+                <% } %>
             </li>
         </ul>
     </div>
