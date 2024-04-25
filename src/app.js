@@ -1,18 +1,12 @@
 // Imports
+const { uri } = require('./controllers/databaseConnection');
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
-// Routes
-const indexRouter = require('./routes/index');
-const aboutRouter = require('./routes/about');
-const productsRouter = require('./routes/products');
-const contactsRouter = require('./routes/contacts');
-const accountRouter = require('./routes/account');
-const createAccountRouter = require('./routes/createAccount');
-const itemRouter = require('./routes/item');
+const session = require('express-session');
+const mongoStore = require('connect-mongo');
 
 const app = express();
 
@@ -25,6 +19,29 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
+
+// session
+app.use(session({
+  secret: "fisht@nk",
+  saveUninitialized: true,
+  resave: false,
+  store: mongoStore.create({ mongoUrl: uri }),
+  cookie: { maxAge: 60 * 60 * 1000 } // 1 hour
+}));
+// session accessibility middleware
+app.use(function (req, res, next) {
+  res.locals.session = req.session;
+  next();
+});
+
+// Routes
+const indexRouter = require('./routes/index');
+const aboutRouter = require('./routes/about');
+const productsRouter = require('./routes/products');
+const contactsRouter = require('./routes/contacts');
+const accountRouter = require('./routes/account');
+const createAccountRouter = require('./routes/createAccount');
+const itemRouter = require('./routes/item');
 
 // Paths
 app.use('/', indexRouter);
