@@ -44,6 +44,10 @@ const createAccountRouter = require('./routes/createAccount');
 const itemRouter = require('./routes/item');
 const shoppingCartRouter = require('./routes/shopping_cart');
 const shoppingCartCheckoutRouter = require('./routes/shoppingcartcheckout');
+const shoppingcartRouter = require('./routes/shopping_cart');
+const shoppingcartcheckoutRouter = require('./routes/shoppingcartcheckout');
+
+
 
 // Paths
 app.use('/', indexRouter);
@@ -55,6 +59,8 @@ app.use('/createAccount', createAccountRouter);
 app.use('/item', itemRouter);
 app.use('/shopping_cart', shoppingCartRouter);
 app.use('/shoppingcartcheckout', shoppingCartCheckoutRouter);
+app.use('/cart', shoppingcartRouter);
+app.use('/checkout', shoppingcartcheckoutRouter);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
