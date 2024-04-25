@@ -1,6 +1,7 @@
 // Imports
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId} = require('mongodb');
 const { uri } = require('./databaseConnection');
+const Cart = require('../models/cart')
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -99,3 +100,42 @@ module.exports.userLogin = async function(req, res) {
         await client.close();
     }
 };
+
+module.exports.addToCart = async (req, res, next) => {
+    try {
+        await client.connect();
+        // Connect to the admin database and send a ping
+        await client.db("admin").command({ping: 1});
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+        // Connect to the database
+        const db0 = client.db("WrapsJC");
+        console.log("db0" + db0.toString());
+
+        // Grab the users collection
+        const productsCollection = db0.collection('products');
+        console.log("collection is " + productsCollection.collectionName);
+        console.log(" # documents in it " + await productsCollection.countDocuments());
+        console.log(" # documents now = " + await productsCollection.countDocuments());
+
+        let cart = new Cart(req.session.cart ? req.session.cart : {});
+
+        try {
+            const product = await productsCollection.findOne(new ObjectId(req.params.id));
+            if (product) {
+                console.log('product with id ' + (await product)._id + ' found');
+                cart.add(product, (await product)._id);
+                req.session.cart = cart;
+                // need to update cart icon to show item added.
+                res.redirect('/products');
+            }
+        } catch(error) {
+            res.status(404).send('Product not found.');
+        }
+    } catch (error) {
+        console.error('Error adding to cart: ' + error);
+        res.status(500).send('Error adding to cart: ' + error)
+    } finally {
+        await client.close();
+    }
+}
