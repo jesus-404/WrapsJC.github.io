@@ -160,3 +160,29 @@ module.exports.getProducts = async function(req, res, next) {
         await client.close();
     }
 };
+
+module.exports.getProduct = async function(req, res, next) {
+    try {
+        await client.connect();
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+        const db0 = client.db("WrapsJC");
+        console.log("got shopping site");
+        console.log("db0" + db0.toString());
+
+        const productsCollection =  db0.collection('products');
+        console.log("collection is "+ productsCollection.collectionName);
+        console.log(" # documents in it " + await productsCollection.countDocuments());
+
+        const product = await productsCollection.findOne(new ObjectId(req.query.prod));
+        console.log('Found product with id:' + product._id + '\n name: ' + product.name);
+        return await productsCollection.findOne(new ObjectId(req.query.prod));
+
+    } catch (error) {
+        console.error('Error getting product: ' + error);
+        res.status(500).send('Error getting product: ' + error)
+    } finally {
+        await client.close();
+    }
+};
