@@ -104,15 +104,12 @@ module.exports.userLogin = async function(req, res) {
 module.exports.addToCart = async (req, res, next) => {
     try {
         await client.connect();
-        // Connect to the admin database and send a ping
         await client.db("admin").command({ping: 1});
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
-        // Connect to the database
         const db0 = client.db("WrapsJC");
         console.log("db0" + db0.toString());
 
-        // Grab the users collection
         const productsCollection = db0.collection('products');
         console.log("collection is " + productsCollection.collectionName);
         console.log(" # documents in it " + await productsCollection.countDocuments());
@@ -139,3 +136,27 @@ module.exports.addToCart = async (req, res, next) => {
         await client.close();
     }
 }
+
+module.exports.getProducts = async function(req, res, next) {
+    try {
+        await client.connect();
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+        const db0 = client.db("WrapsJC");
+        console.log("got shopping site");
+        console.log("db0" + db0.toString());
+
+        const productsCollection =  db0.collection('products');
+        console.log("collection is "+ productsCollection.collectionName);
+        console.log(" # documents in it " + await productsCollection.countDocuments());
+
+        return await productsCollection.find().toArray();
+
+    } catch (error) {
+        console.error('Error getting products: ' + error);
+        res.status(500).send('Error getting products: ' + error)
+    } finally {
+        await client.close();
+    }
+};
