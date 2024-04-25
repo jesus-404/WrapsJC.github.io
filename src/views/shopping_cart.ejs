@@ -23,19 +23,19 @@
     <!-- Template Start -->
 <h1>Shopping Cart</h1>
 
-    <% if( prodID  == 0){ %>
+    <% if( session.cart.totalQuantity === 0){ %>
     <p>Your Shopping Cart is Empty</p>
     <% } else{ %>
-    <div class="flex-group">
+    <% session.cart.items.forEach(product => { %>
+      <div class="flex-group">
         <div class="card"> <img class="card-img-top" src="img/prod<%= prodID %>.jpg" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title"><%= name %></h5>
-            <p class="card-text">$<%= price %> USD</p>
-            <a href="/item?prod=<%= prodID %>" class="btn btn-primary">remove</a></div>
+            <h5 class="card-title"><%= product.name %></h5>
+            <p class="card-text"><%= product.price %> USD</p>
+            <a href="/item?prod=<%= product._id %>" class="btn btn-primary">remove</a></div>
         </div>
+    <% }); %>
     <% } %>
-
-
 
     </div>
       <div class="row">
