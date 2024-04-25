@@ -30,3 +30,21 @@ footer .row .col-xl-6 {
 .container .navbar-toggler {
     background-color: #B3B3B3;
 }
+
+.shopping-cart {
+    position: relative;
+    display: inline-block;
+}
+
+.badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card-img-top {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+}
