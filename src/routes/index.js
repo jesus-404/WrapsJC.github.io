@@ -20,8 +20,4 @@ router.get('/addToCart/:id', async function (req, res, next) {
   await addToCart(req, res, next);
 });
 
-// Database
-const controllerDatabase = require('../controllers/database');   //this will load the controller file below
-router.post("/saveNewUser", controllerDatabase.saveNewUser); //see controllers/database.js file
-
 module.exports = router;
