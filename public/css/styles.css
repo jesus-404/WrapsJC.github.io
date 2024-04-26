@@ -38,7 +38,7 @@ footer .row .col-xl-6 {
 
 .badge {
     position: absolute;
-    top: 50%;
+    top: 59%;
     left: 50%;
     transform: translate(-50%, -50%);
 }

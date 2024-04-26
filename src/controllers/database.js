@@ -123,8 +123,7 @@ module.exports.addToCart = async (req, res, next) => {
                 console.log('product with id ' + (await product)._id + ' found');
                 cart.add(product, (await product)._id);
                 req.session.cart = cart;
-                // need to update cart icon to show item added.
-                res.redirect('/products');
+                res.redirect('/shopping_cart');
             }
         } catch(error) {
             res.status(404).send('Product not found.');
@@ -182,6 +181,105 @@ module.exports.getProduct = async function(req, res, next) {
     } catch (error) {
         console.error('Error getting product: ' + error);
         res.status(500).send('Error getting product: ' + error)
+    } finally {
+        await client.close();
+    }
+};
+
+module.exports.placeOrder =  async function(req, res, next) {
+    // Get form data
+    const { firstName, lastName, address, country, city, state, zip, fullName, cardNumber, cardExpire, cardCVV } = req.body;
+
+    try {
+        await client.connect();
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+        const db0 = client.db("WrapsJC");
+        console.log("db0" + db0.toString());
+
+        const billingCollection =  db0.collection('billing');
+        console.log("collection is "+ billingCollection.collectionName);
+        console.log(" # documents in it " + await billingCollection.countDocuments());
+
+        // Insert the billing information
+        const resultBilling = await billingCollection.insertOne({
+            "fullName": fullName,
+            "cardNumber": cardNumber,
+            "cardExpire": cardExpire,
+            "cardCVV": cardCVV
+        });
+        console.log(" # documents now = " + await billingCollection.countDocuments());
+
+        const shippingCollection =  db0.collection('shipping');
+        console.log("collection is "+ shippingCollection.collectionName);
+        console.log(" # documents in it " + await shippingCollection.countDocuments());
+
+        // Insert the shipping address
+        const resultShipping = await shippingCollection.insertOne({
+            "firstName": firstName,
+            "lastName": lastName,
+            "address": address,
+            "country": country,
+            "city": city,
+            "state": state,
+            "zip": zip,
+        });
+        console.log(" # documents now = " + await shippingCollection.countDocuments());
+
+        const ordersCollection =  db0.collection('orders');
+        console.log("collection is "+ ordersCollection.collectionName);
+        console.log(" # documents in it " + await ordersCollection.countDocuments());
+
+        // Access session cart info
+        const cart = new Cart(req.session.cart);
+
+        // Insert new order
+        const resultOrder = await ordersCollection.insertOne({
+            "billingID": resultBilling.insertedId,
+            "shippingID": resultShipping.insertedId,
+            "cart": cart
+        });
+        console.log(" # documents now = " + await ordersCollection.countDocuments());
+        // clear cart session
+        req.session.destroy();
+
+        // redirect to order summary
+        res.redirect(`/storeOrder/${resultOrder.insertedId.toString()}`);
+    } catch (error) {
+        console.error('Error placing order: ', error);
+        res.status(500).send('Error placing order: ', error)
+    } finally {
+        await client.close();
+    }
+};
+
+module.exports.getOrder =  async function(req, res, next) {
+    try {
+        await client.connect();
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+        const db0 = client.db("WrapsJC");
+        console.log("db0" + db0.toString());
+
+        const ordersCollection =  db0.collection('orders');
+        console.log("collection is "+ ordersCollection.collectionName);
+        console.log(" # documents in it " + await ordersCollection.countDocuments());
+
+        // Get order from DB using url ID
+        const order = await ordersCollection.findOne(new ObjectId(req.params.id));
+        if (order) {
+            console.log('order' + order);
+            const cartData = order.cart
+            const cart = new Cart(cartData);
+            res.render('storeOrder', { products:cart.toArray(), totalPrice: cart.totalPrice, totalQuantity: cart.totalQuantity });
+        } else {
+            console.log('order not found');
+         res.redirect('/');
+        }
+    } catch (error) {
+        console.error('Error getting order: ', error);
     } finally {
         await client.close();
     }

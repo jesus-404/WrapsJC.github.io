@@ -19,54 +19,50 @@
 <%- include('layouts/navBar.ejs') %>
 <div class="container">
   <div class="py-5 text-center">
-  <h2>CheckOut</h2>
-  <p class="lead"></p>
-</div>
+    <h2>CheckOut</h2>
+    <p class="lead"></p>
+  </div>
 </div>
 
 <div class="container">
   <h4 class="mb-3">Billing Address</h4>
-  <form novalidate >
+  <form action="/shoppingcartcheckout" method="POST" id="checkoutForm">
     <div class="row g-3">
       <div class="col-sm-6">
         <label for="firstName" class="form-label">First Name</label>
-        <input id="firstName" type="text" class="form-control" placeholder="Name" required>
+        <input id="firstName" type="text" class="form-control" name="firstName" placeholder="Name" required>
         <div class="invalid-feedback">
           Valid First name is required.
         </div>
       </div>
-        <div class="col-sm-6">
-          <label for="lastName" class="form-label">Last Name</label>
-          <input id="lastName" type="text" class="form-control" placeholder="Last Name" required>
-          <div class="invalid-feedback">
-            Valid Last name is required.
-          </div>
-        </div>
-      <div class="col-12">
-        <label for="userName" class="form-label">Username</label>
-        <div class="input-group">
-          <span
-                  class="input-group-text">@</span>
-                  <input id="username" type="text" class="form-control" placeholder="XXXX" required>
-        </div>
-        <div class="invalid-feedback">
-        Valid Username is required.
-        </div>
-      </div>
-      <dic class="col-md-5">
-        <label for="country" class="form-label">Country</label>
-          <select id="username"  class="form-control" >
-            <option value="">Choose...</option>
-            <option value="Canada">Canada</option>
-            <option value="Asia">USA</option>v
-          </select>
+      <div class="col-sm-6">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input id="lastName" type="text" class="form-control" name="lastName" placeholder="Last Name" required>
         <div class="invalid-feedback">
           Valid Last name is required.
         </div>
-      </dic>
-      <div class="col-md-4">
-        <label for="state" class="form-label">States</label>
-        <select id="username"  class="form-control" >
+      </div>
+      <div class="col-sm-6">
+        <label for="address" class="form-label">Street Address</label>
+        <input id="address" type="text" class="form-control" name="address" placeholder="Street Address" required>
+        <div class="invalid-feedback">
+          Valid Last name is required.
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label for="country" class="form-label">Country</label>
+        <select id="country"  class="form-control" name="country" >
+          <option value="">Choose...</option>
+          <option value="Canada">Canada</option>
+          <option value="Asia">USA</option>v
+        </select>
+        <div class="invalid-feedback">
+          Valid Last name is required.
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <label for="state" class="form-label">State</label>
+        <select id="state"  class="form-control" name="state">
           <option value="">Choose...</option>
           <option value="NewMexico">NM</option>
           <option value="california">CA</option>
@@ -75,11 +71,20 @@
         <div class="invalid-feedback">
           Valid Last name is required.
         </div>
-    </div>
-      <div class="col-md-3">
-        <label for="zipcode" class="form-label">Zip-code</label>
+      </div>
+      <div class="col-sm-4">
+        <label for="city" class="form-label">City</label>
         <div class="input-group">
-          <input id="zipcode" type="number" class="form-control" placeholder="1234" required>
+          <input id="city" type="text" class="form-control" name="city" placeholder="City" required>
+        </div>
+        <div class="invalid-feedback">
+          Valid Username is required.
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <label for="zip" class="form-label">Zip-code</label>
+        <div class="input-group">
+          <input id="zip" type="number" class="form-control" name="zip" placeholder="1234" required>
         </div>
         <div class="invalid-feedback">
           Valid Username is required.
@@ -90,35 +95,13 @@
 
       <div class="col-12">
         <div class="form-check">
-          <input id="samAddress" type="checkbox" class="form-check-input">
-          <label class="form-check-label" for="samAddress">Shipping address is the same as Billing.</label>
+          <input id="sameAddress" type="checkbox" class="form-check-input">
+          <label class="form-check-label" for="sameAddress">Shipping address is the same as Billing</label>
         </div>
         <div class="form-check">
           <input id="safeInfo" type="checkbox" class="form-check-input">
-          <label class="form-check-label" for="safeInfo">Safe this info.</label>
+          <label class="form-check-label" for="safeInfo">Save this info</label>
         </div>
-      </div>
-
-      <hr class="my-4">
-
-      <h4 class="mb-3">Payments</h4>
-
-      <div class="form-check">
-        <input id="creditCard" name="paymentMethod" type="radio"
-               class="form-check-input" checked required>
-        <label for="creditCard">Credit Card</label>
-      </div>
-
-      <div class="form-check">
-      <input id="creditCard" name="paymentMethod" type="radio"
-             class="form-check-input" checked required>
-      <label for="directDebit">Direct Debit</label>
-      </div>
-
-      <div class="form-check">
-        <input id="paypal" name="paymentMethod" type="radio"
-               class="form-check-input" checked required>
-        <label for="paypal">Paypal</label>
       </div>
 
       <hr class="my-4">
@@ -129,20 +112,7 @@
       <div class="form-check1">
         <input id="shipping" name="shipping" type="radio"
                class="form-check-input" checked required>
-        <label for="normalship">3-5 business days - $0.00&nbsp;</label>
-      </div>
-
-
-      <div class="form-check1">
-        <input id="sshipping" name="shipping" type="radio"
-               class="form-check-input" checked required>
-        <label for="fsshipping">2 business days - $7.00&nbsp;</label>
-      </div>
-
-      <div class="form-check1">
-        <input id="fast" name="shipping" type="radio"
-               class="form-check-input" checked required>
-        <label for="fast">1 business day - $22.00&nbsp;</label>
+        <label for="shipping">3-5 business days - $0.00&nbsp;</label>
       </div>
 
       <hr class="my-4">
@@ -152,7 +122,7 @@
           <label for="fullName" class=form-label>
             Name on card
           </label>
-          <input id="fullName" type="text" class="form-control">
+          <input id="fullName" type="text" class="form-control" name="fullName" placeholder="Full Name">
           <small class="text-muted">
             Full Name as Displayed on card.
           </small>
@@ -162,58 +132,78 @@
         </div>
 
         <div class="col-sm-6">
-          <label for="cc-number" class=form-label>
+          <label for="cardNumber" class=form-label>
             Credit card Number
           </label>
-          <input id="cc-number" type="text" class="form-control">
+          <input id="cardNumber" type="text" class="form-control" name="cardNumber" placeholder="Card Number">
           <div class="invalid-feedback">
             Credit Card Number is Required.
           </div>
         </div>
 
         <div class="col-md-3">
-          <label for="cc-number" class=form-label>
+          <label for="cardExpire" class=form-label>
             Expiration
           </label>
-          <input id="cc-expire" type="text" class="form-control">
+          <input id="cardExpire" type="text" class="form-control" name="cardExpire" placeholder="Expiration Date">
           <div class="invalid-feedback">
             Expiration is Required.
           </div>
         </div>
 
         <div class="col-md-3">
-          <label for="cc-cvv" class=form-label>
+          <label for="cardCVV" class=form-label>
             CVV
           </label>
-          <input id="cc-cvv" type="text" class="form-control">
+          <input id="cardCVV" type="text" class="form-control" name="cardCVV" placeholder="Card CVV">
           <div class="invalid-feedback">
             CVV is Required.
           </div>
         </div>
         <hr class="my4">
-
-        <button class="btn btn-primary btn-lg btn-block">Continue to checkout</button>
-
       </div>
     </div>
-
-
-
+    <div class="row d-flex justify-content-center">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Order Summary</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+              Products
+              <span>$<%= parseFloat(totalPrice).toFixed(2) %></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+              Shipping
+              <span>$0.00</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+              <div>
+                <strong>Total amount</strong>
+              </div>
+              <span><strong>$<%= parseFloat(totalPrice).toFixed(2) %></strong></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Buy Now</button>
+    </div>
   </form>
 </div>
 
-    <!-- Template End -->
-    <br>
-    <br>
-    <footer class="fill">
-      <div class="row">
+<!-- Template End -->
+<br>
+<br>
+<footer class="fill">
+  <div class="row">
 
 
-      </div>
-      <br>
-      <br>
-    </footer>
   </div>
+  <br>
+  <br>
+</footer>
+</div>
 </div>
 
 <!-- Bootstrap Scripts -->

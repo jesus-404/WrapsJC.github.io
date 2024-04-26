@@ -13,13 +13,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="/account">Sign In/Sign Up</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/checkout">out</a>
-            </li>
             <li class="nav-item position-relative">
                 <a class="nav-link shopping-cart" href="/shopping_cart"> <img src="/img/shop_12411190.png" height="25" alt="cart"></a>
-                <% if (session.cart) { %>
-                    <a class="badge badge-success" href="/shopping_cart"><%= session.cart.totalQuantity %></a>
+                <% if (session.cart && session.cart.totalQuantity > 0) { %>
+                    <a href="/shopping_cart">
+                        <div class="badge bg-success" style="font-size: 0.55em;"><%= session.cart.totalQuantity %>
+                        </div>
+                    </a>
                 <% } %>
             </li>
         </ul>

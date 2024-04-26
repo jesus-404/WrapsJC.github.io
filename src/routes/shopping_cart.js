@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     return res.render('shopping_cart', { products: null, totalPrice: 0 });
   }
   const cart = new Cart(req.session.cart);
-  res.render('shopping_cart', { products: cart.toArray(), totalPrice: cart.totalPrice });
+  res.render('shopping_cart', { products: cart.toArray(), totalPrice: cart.totalPrice});
 });
 
 
