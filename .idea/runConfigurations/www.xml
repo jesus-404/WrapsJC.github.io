@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="www" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="src/www" working-dir="$PROJECT_DIR$">
+  <configuration default="false" name="www" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/www" working-dir="$PROJECT_DIR$">
     <envs>
       <env name="DEBUG" value="project2:*" />
     </envs>
